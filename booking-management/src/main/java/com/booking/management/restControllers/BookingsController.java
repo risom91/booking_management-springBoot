@@ -1,6 +1,7 @@
 package com.booking.management.restControllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,7 +18,11 @@ public class BookingsController {
 	}
 	
 	// checkinInData and checkoutDate will be in epochmillis format
-	public boolean addBooking(Long checkInDate, Long checkOutDate,Long hotelId, Long userId) throws Exception {
+	public boolean addBooking(@RequestBody Long checkInDate, @RequestBody Long checkOutDate,@RequestBody Long hotelId,@RequestBody Long userId) throws Exception {
 		return bookingService.addBooking(checkInDate, checkOutDate, hotelId, userId);
+	}
+	
+	public boolean cancelBooking(@RequestBody Long bookingId, @RequestBody Long hotelId, @RequestBody Long userId, @RequestBody Long checkInDate) throws Exception {
+		return bookingService.cancelBooking(bookingId,checkInDate, hotelId, userId);
 	}
 }

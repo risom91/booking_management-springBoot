@@ -49,6 +49,25 @@ public class DefaultBookingService implements BookingService {
 		return result;
 	}
 
+	@Override
+	public boolean cancelBooking(Long bookingId, Long checkInDate, Long hotelId, Long userId) throws Exception {
+		if(bookingId != null && userId != null) {
+			Optional<Bookings> optBooking = bookingsRepository.findById(userId);
+			if(!optBooking.isEmpty()) {
+				Bookings booking = optBooking.get();
+				if(booking.getCustomers().getId().equals(userId)) {
+					bookingsRepository.deleteById(bookingId);
+					return true;
+				}
+			}
+			else {
+				// more logic to check the booking using hotelId and userId can be written
+				throw new Exception("no booking found with the provided id");
+			}
+		}
+		return false;
+	}
+
 
 
 }
